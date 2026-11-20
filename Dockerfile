@@ -4,4 +4,4 @@ RUN docker-php-ext-install pdo_mysql
 
 WORKDIR /var/www/html
 
-COPY conexion.php index.php registrar.php agenda.php ./
+COPY conexion.php index.php registrar.php agenda.php menu.php estilos.css ./

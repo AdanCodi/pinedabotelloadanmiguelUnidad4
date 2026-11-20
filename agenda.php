@@ -23,6 +23,7 @@ try {
          WHERE fecha = ?
          ORDER BY hora'
     );
+
     $consulta->execute([$fecha]);
     $citas = $consulta->fetchAll(PDO::FETCH_ASSOC);
 } catch (PDOException $e) {
@@ -42,15 +43,23 @@ function escapar(string $valor): string
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Agenda por fecha | Barbería</title>
+    <link rel="stylesheet" href="estilos.css">
 </head>
 <body>
+    <?php require __DIR__ . '/menu.php'; ?>
+
     <main>
         <h1>Agenda de la barbería</h1>
 
-        <form method="get">
+        <form method="get" action="agenda.php">
             <label for="fecha">Fecha de la agenda</label>
-            <input type="date" id="fecha" name="fecha"
-                   value="<?= escapar($fecha) ?>" required>
+            <input
+                type="date"
+                id="fecha"
+                name="fecha"
+                value="<?= escapar($fecha) ?>"
+                required
+            >
             <button type="submit">Consultar</button>
         </form>
 
@@ -58,27 +67,31 @@ function escapar(string $valor): string
 
         <?php if ($error !== ''): ?>
             <p role="alert"><?= escapar($error) ?></p>
+
         <?php elseif (count($citas) === 0): ?>
             <p>No hay citas registradas para este día.</p>
+
         <?php else: ?>
-            <table>
-                <thead>
-                    <tr>
-                        <th scope="col">Hora</th>
-                        <th scope="col">Cliente</th>
-                        <th scope="col">Servicio</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php foreach ($citas as $cita): ?>
+            <div class="tabla-contenedor">
+                <table>
+                    <thead>
                         <tr>
-                            <td><?= escapar(substr($cita['hora'], 0, 5)) ?></td>
-                            <td><?= escapar($cita['cliente']) ?></td>
-                            <td><?= escapar($cita['servicio']) ?></td>
+                            <th scope="col">Hora</th>
+                            <th scope="col">Cliente</th>
+                            <th scope="col">Servicio</th>
                         </tr>
-                    <?php endforeach; ?>
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($citas as $cita): ?>
+                            <tr>
+                                <td><?= escapar(substr($cita['hora'], 0, 5)) ?></td>
+                                <td><?= escapar($cita['cliente']) ?></td>
+                                <td><?= escapar($cita['servicio']) ?></td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </div>
         <?php endif; ?>
 
         <p><a href="registrar.php">Registrar una cita</a></p>

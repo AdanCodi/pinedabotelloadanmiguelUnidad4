@@ -81,8 +81,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Registrar cita | Barbería</title>
+    <link rel="stylesheet" href="estilos.css">
 </head>
 <body>
+    <?php require __DIR__ . '/menu.php'; ?>
     <main>
         <h1>Registrar cita en la barbería</h1>
 
@@ -136,9 +138,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             <button type="submit">Guardar cita</button>
         </form>
-
-        <p><a href="index.php">Ver total de citas registradas</a></p>
-        <p><a href="agenda.php">Consultar agenda por fecha</a></p>
     </main>
 </body>
 </html>
